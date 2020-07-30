@@ -170,4 +170,45 @@ sorted()也是一个高阶函数，能够接受一个key函数来实现自定义
     '''下面为原理'''
     kw = {'base': 2}
     int('1000', **kw) 
+
+#### 模块和包
+一个py文件可以看成一个模块module，很多py文件可以组成一个包package，顶层包名要特殊，另外__init__.py必须存在  
+外部不需要引用的函数应全部定义为private， 即在函数名前加_， 只有外部需要引用的才定义为public，即正常命名
+
+#### 面向对象编程
+面向对象的抽象程度比函数要高，因为一个class即包含数据又包含操作数据的方法  
+面向对象的三大特点：
+1. 数据封装
+在类里面定义函数，所以数据和逻辑都被封装，可以很容易的调用，但是不用知道内部实现的细节
+##### 设置访问限制
+
+    class Student():
+        def __init__(self, name, score):
+            '''在属性名称前加入两个下划线，使之不能从外部访问'''
+            self.__name = name
+            self.__score = score
+
+        def print_score(self):
+            print(self.__score) # 内部还是可以访问的
+
+        def get_name(self):
+            '''要获得似有变量，可以在类里面创建函数'''
+            return self.__name
+
+        def set_score(self, score):
+            '''如果要允许外部代码修改，也是在类里面增加方法, 且可以更加灵活，比如添加参数检查'''
+            if 0 < score:
+                self.__score = socre
+            else:
+                raise ValueError('invalid score')
+            # 以上的实现方式比简单的student.score = 99更为科学
+    ‘’‘ 注意：
+    前后都有下划线的是特殊变量，可以直接访问，
+    前面只有一个下划线的虽然不是private变量，但是约定俗成视为私有变量不要随意访问
+    而实际上私有变量也不是完全不能访问，使用student._Student__name就可以访问（解释器将__name变量改成了_Student__name变量）
+    ‘’‘
+
+2. 继承
+
+3. 多态
     
