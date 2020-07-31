@@ -209,6 +209,46 @@ sorted()也是一个高阶函数，能够接受一个key函数来实现自定义
     ‘’‘
 
 2. 继承
-
+子类和父类存在同名方法时，子类会覆盖父类
 3. 多态
+class Animal() 这样的定义，Animal就成了一种数据类型，如果class Dog(Animal)，即Dog继承了Animal，那么Dog类的对象既是Dog类型又是Animal类型。  
+当我们传入Dog，Cat等子类，只需要接受Animal类型，当我们调用类型里的函数时，调用子类还是父类Animal里的同名函数由对象决定。所以调用方法只管调用， 不管细节。  
+开闭原则：
+    对扩展开放：允许新增父类的子类
+    对修改封闭：不需要修改依赖父类类型的函数  
+Python是动态语言，要对某种对象调用某种方法，只要保证该对象实现了该方法就可，不一定要传入具体类型
+
+##### 获取对象的信息
+可以用type()判断基本类型，它返回对应的Class类型。  
+判断一个对象是否是函数可以使用types模块
+
+    import types
     
+    def fn():
+        pass
+    type(fn) == types.FunctionType
+    type(abs) == types.BuiltinFunctionType
+    ## above all return true
+
+判断class类型，可以使用isinstance()  
+
+    class Animal():
+        pass
+    class Dog(Animal):
+        pass
+
+    a = Animal()
+    b = Dog()
+    isinstance(b, Animal) # return True
+    isinstance(a, Dog) # return False
+
+dir()可以获得一个对象的所有属性和方法， 配合getattr()，setattr()和hasattr()可以获取属性，设置属性和询问属性是否存在
+
+##### 类属性和实例属性
+除了在__init__()中给实例绑定属性外，也可以直接在class下给类绑定类属性，当实例访问该属性时，如果实例未绑定则返回类属性，否则优先返回实例属性，
+不过还是可以通过类直接访问，如Animal.name
+
+#### 面向对象高级编程
+
+
+
