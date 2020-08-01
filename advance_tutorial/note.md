@@ -249,6 +249,96 @@ dir()可以获得一个对象的所有属性和方法， 配合getattr()，setat
 不过还是可以通过类直接访问，如Animal.name
 
 #### 面向对象高级编程
+1. 除了给实例绑定属性，还可以给实例绑定方法，但是给A实例绑定的方法不能在B实例上实现，解决方法是直接给类绑定方法
+##### __slots__
+定义class的时候，可以定义特殊变量__slots__来限制该class实例可以添加的属性
 
+    class Student():
+        __slots__ = ('name', 'age')
+要注意的是__slots__仅对当前类实例起作用，对继承的子类不起作用
+
+    class Student(Graduate):
+        pass
+    # Graduate类实例是可以绑定除了name和age之外的属性的
+
+##### 内置装饰器@property
+@property 装饰器把一个方法变成属性，这个属性是只读属性  
+@func.setter 装饰器把一个方法变成属性赋值，这个属性是可读写的
+
+    class Student():
+        
+        @property
+        def birth(self):
+            return self._birth
+
+        @birth.setter # 这个装饰器，要在之前使用过@property之后才能使用，因为是前一个生成的
+        def birth(self, value):
+            self._birth = value
+        
+        @property
+        def age(self):
+            return 2015 - self._birth
+
+##### 多重继承
+通过多重继承，一个子类可以同时获得多个父类的所有功能，这种设计称为MixIn  
+    
+    class Animal():
+        pass
+    
+    class Runable():
+        def run(self):
+            print('running')
+
+    class Dog(Animal, Runable):
+        pass
+
+##### 定制类
+__str__(self)方法帮助返回好看的打印数据，要调用print
+__repr__(self)方法帮助返回好看的开发者字符串，直接输入
+
+    class Student():
+        def __init__(self, name):
+            self.name = name
+
+        def __str__(self):
+            return 'Student Object (name: %s)' % self.name
+
+        __repr__ = __str__ #偷懒写法
+
+__iter__(self)方法返回一个迭代对象，结合__next__对象进行迭代  
+
+__getitem__(self)方法能表现得像list那样下标去处元素  
+__delitem__(self)用于删除某个元素  
+
+__getattr__(self, attr)方法作用于当调用不存在属性时，解释器会试图调用getattr尝试获得  
+
+__call__(self) 方法帮助在实例本身调用方法  
+函数都是callable的
+
+##### 枚举类
+
+    from enum import Enum, unique
+
+    Month = Enum('Month', ('Jan', 'Feb', 'Mar'))
+
+    for name, member in Month.__members__.items():
+        print(name, member, member.value) # value 属性是自动赋给成员的int常量，默认从1开始计数
+
+    # 还可以更精确的控制
+
+    @unique # 这个装饰器帮助检查有无重复值
+    class Weekday(Enum):
+        Sun = 0
+        Mon = 1
+
+##### 元类
+创建class的本质是使用type()函数创建出class
+
+    #使用type()动态创建类
+    def fn(self, name = 'World'):
+        print('Hello, %s.' % name)
+    Hello = type('Hello', (object,), dict(hello = fn)) #创建出Hello class,依次传入class名称，父类集合，class方法名字和函数绑定
+
+MetaClass元类，是类的类
 
 
