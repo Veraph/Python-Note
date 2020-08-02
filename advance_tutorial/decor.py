@@ -1,7 +1,10 @@
 # decor.py -- show how to write and use a decorator
-# 装饰器用来增强函数的功能，如写一个计算函数运行时间的装饰器，可以把它运用在任意一个函数上而不用逐个重写
+# 装饰器用来增强函数的功能，如写一个计算函数运行时间的装饰器，
+# 可以把它运用在任意一个函数上而不用逐个重写
 
-import functools # because we want to use the wraps function to pass __name__ etc properties to wrapper()
+ # use functools because we want to use the wraps function to 
+ # pass __name__ etc properties to wrapper()
+import functools
 import time
 
 def log(func):
