@@ -16,7 +16,7 @@ TCP和IP协议是最重要的两种互联网协议
 #### UDP(User Datagram Protocol)
 1. UDP是面向无连接的协议，使用时不需要建立连接，只需要知道对方的IP和端口就可以直接发送数据包，但是能不能达到就不知道了。
 2. 与TCP相比，优点是速度快，对于不要求可靠到达的就可以用UDP
-
+3. 由于UDP不需要建立连接，所以客户端绑定UDP端口和TCP端口不冲突（端口号可以为一样）
    
 ### TCP编程(客户端和服务器编写见client和server py文件)
 1. socket是网络编程的一个抽象概念，一个socket表示打开了一个网络链接，打开一个socket需要知道目标计算机的IP地址和端口号，再指定协议类型
@@ -24,3 +24,13 @@ TCP和IP协议是最重要的两种互联网协议
 3. TCP连接创建的是双向通道，双方都可以同时给对方发数据，先后顺序由具体协议决定，如HTTP就规定客户端必须先发请求给服务器，服务器收到后才发数据回客户端
 
 ### UDP编程
+见client和server文件
+
+### 电子邮件
+1. Outlook之类的电子邮件软件---MUA(Mail User Agent)
+2. 网易、新浪、微软等Eemail服务提供商---MTA(Mail Transfer Agent)
+3. 邮件的最终目的地---MDA(Mail Delivery Agent)
+4. 一封电子邮件的旅程为：  
+发件人 --> MUA --> MTA（可能若干个）--> MDA <-- MUA <-- 收件人
+5. 发邮件时MUA和MTA使用的协议是SMTP(Simple Mail Transfer Protocol)，从一个MTA到另一个MTA也是SMTP
+6. 收邮件时MUA和MDA使用两种协议POP(Post Office Protocol),现在是版本3，所以是POP3; IMAP(Internet Message Access Protocol),优点是不但能取邮件，还可以直接操作MDA上存储的邮件
